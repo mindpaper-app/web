@@ -11,6 +11,10 @@ To get started with the mindpaper Frontend, follow these steps:
 3. Run the development server using `yarn dev`.
 4. The app will be running locally at `http://localhost:5173` by default.
 
+## Preview
+
+![App](https://media.discordapp.net/attachments/839785290703831053/1097938446976286802/image.png?width=810&height=415)
+
 ## Contributing
 
 We welcome contributions from the community to help improve the mindpaper Frontend.
