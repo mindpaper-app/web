@@ -22,7 +22,7 @@ const ProtectedRoute = () => {
       setUser(data)
     } catch (error) {
       console.log(error)
-      cookies.remove('token', { path: '/' })
+      cookies.remove('token', { path: '/', sameSite: 'strict' })
       navigate('/')
     }
   }

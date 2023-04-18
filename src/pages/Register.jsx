@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import Cookies from 'universal-cookie';
-import { login } from '../api'
+import axios from 'axios'
+import { register } from '../api'
 import '../styles/Auth.scss'
 
 import { CiStickyNote, CiLogin } from 'react-icons/ci'
 
-const Login = () => {
+const Register = () => {
     const navigate = useNavigate()
     const cookies = new Cookies()
 
@@ -15,7 +16,7 @@ const Login = () => {
     const [error, setError] = useState('')
 
     useEffect(() => {
-        if(cookies.get('token')) navigate('/app')
+        if (cookies.get('token')) navigate('/app')
     }, [])
 
     const displayError = (msg) => {
@@ -23,16 +24,14 @@ const Login = () => {
         setTimeout(() => setError(''), 5000)
     }
 
-    const handleButton = async() => {
-        if(username === '' || password === '') return displayError('Fill all fields')
+    const handleButton = async () => {
+        if (username === '' || password === '') return displayError('Fill all fields')
         try {
-            const { data } = await login(username, password)
-            const { token } = data
+            const { data } = await register(username, password)
 
-            cookies.set('token', token, { path: '/', sameSite: 'strict' })
-            navigate('/app')
+            navigate('/')
         } catch (err) {
-            if(err.response.status === 400) return displayError('Invalid username or password')
+            if (err.response.status === 400) return displayError('Username already exists')
             displayError('Something went wrong')
         }
     }
@@ -54,11 +53,11 @@ const Login = () => {
                     <input type="password" placeholder='********' value={password} onChange={(e) => setPassword(e.target.value)} />
                 </div>
                 <p className={`error ${error && 'show'}`}>{error || <>&nbsp;</>}</p>
-                <button onClick={handleButton}><CiLogin />Login</button>
-                <p className='info'>Don't have an account? Register <Link to="/register">here</Link></p>
+                <button onClick={handleButton}><CiLogin />Register</button>
+                <p className='info'>Already have an account? Login <Link to="/">here</Link></p>
             </div>
         </div>
     )
 }
 
-export default Login
+export default Register
